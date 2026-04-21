@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "services": "الخدمات",
+    "catalog": "الكتالوج",
+    "gallery": "المعرض",
+    "about": "من نحن",
+    "contact": "اتصل بنا",
+    "bookExam": "احجز موعدًا",
+    "admin": "الإدارة"
+  },
+  "hero": {
+    "location": "بئر الجير · وهران، الجزائر",
+    "cta_services": "خدماتنا",
+    "cta_contact": "تواصل معنا",
+    "badge": "سنوات من الخبرة"
+  },
+  "strip": {
+    "specialty_label": "التخصص",
+    "specialty_value": "البصريات والنظارات",
+    "hours_label": "أوقات العمل",
+    "location_label": "الموقع",
+    "appointment_label": "المواعيد",
+    "appointment_value": "بدون حجز مسبق"
+  },
+  "stats": {
+    "years": "سنوات من الخبرة",
+    "patients": "مريض تمت خدمته",
+    "frames": "إطار في المخزون",
+    "services": "خدمات متاحة"
+  },
+  "about": {
+    "signature": "— خوان ياسين، بصري"
+  },
+  "services": {
+    "title": "خدماتنا",
+    "subtitle": "رعاية بصرية شاملة للعائلة بأكملها"
+  },
+  "gallery": {
+    "title": "مركزنا",
+    "subtitle": "فضاء عصري مكرّس لراحتك البصرية"
+  },
+  "testimonials": {
+    "title": "آراء مرضانا",
+    "subtitle": "ما يقوله عملاؤنا"
+  },
+  "booking": {
+    "title": "احجز موعدًا",
+    "subtitle": "احجز فحص نظرك في بضع نقرات",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "email": "البريد الإلكتروني (اختياري)",
+    "preferredDate": "التاريخ المفضل",
+    "preferredTime": "الوقت المفضل",
+    "reason": "السبب (اختياري)",
+    "submit": "تأكيد الموعد",
+    "submitting": "جارٍ الإرسال...",
+    "success_title": "تم تسجيل موعدك!",
+    "success_body": "سنتواصل معك لتأكيد موعدك.",
+    "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
+    "time_morning": "الصباح (9–12)",
+    "time_afternoon": "بعد الظهر (12–15)",
+    "time_evening": "المساء (15–19)"
+  },
+  "catalog": {
+    "title": "كتالوجنا",
+    "subtitle": "الإطارات والعدسات والنظارات الشمسية",
+    "filter_all": "الكل",
+    "filter_frames": "الإطارات",
+    "filter_lenses": "العدسات",
+    "filter_sunglasses": "الشمسية",
+    "filter_brand": "العلامة التجارية",
+    "filter_price": "السعر",
+    "filter_stock": "المتوفر فقط",
+    "no_results": "لم يتم العثور على منتجات",
+    "price_from": "ابتداءً من",
+    "currency": "دج",
+    "in_stock": "متوفر",
+    "out_of_stock": "نفذ المخزون",
+    "details": "عرض التفاصيل"
+  },
+  "contact": {
+    "title": "كيفية الوصول إلينا",
+    "hours_title": "ساعات العمل",
+    "saturday_wednesday": "السبت – الأربعاء",
+    "thursday": "الخميس",
+    "friday": "الجمعة",
+    "closed": "مغلق",
+    "whatsapp": "واتساب",
+    "phone": "الهاتف",
+    "address": "العنوان",
+    "open_now": "مفتوح الآن",
+    "closed_now": "مغلق"
+  },
+  "cta": {
+    "title": "هل أنت مستعد لرؤية العالم بوضوح؟",
+    "subtitle": "احجز موعدك اليوم",
+    "button": "احجز عبر واتساب"
+  },
+  "footer": {
+    "tagline": "رؤيتك، أولويتنا.",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "admin": {
+    "dashboard": "لوحة التحكم",
+    "services": "الخدمات",
+    "catalog": "الكتالوج",
+    "appointments": "المواعيد",
+    "testimonials": "الشهادات",
+    "content": "المحتوى",
+    "api_keys": "مفاتيح API",
+    "logout": "تسجيل الخروج",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "add": "إضافة",
+    "publish": "نشر",
+    "status_pending": "في الانتظار",
+    "status_confirmed": "مؤكد",
+    "status_completed": "مكتمل",
+    "status_cancelled": "ملغى",
+    "login_title": "دخول المشرف",
+    "login_email": "البريد الإلكتروني",
+    "login_password": "كلمة المرور",
+    "login_submit": "تسجيل الدخول",
+    "login_error": "البريد الإلكتروني أو كلمة المرور غير صحيحة"
+  }
+}

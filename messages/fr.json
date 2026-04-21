@@ -1,0 +1,128 @@
+{
+  "nav": {
+    "services": "Services",
+    "catalog": "Catalogue",
+    "gallery": "Galerie",
+    "about": "À propos",
+    "contact": "Contact",
+    "bookExam": "Prendre RDV",
+    "admin": "Admin"
+  },
+  "hero": {
+    "location": "Bir El Djir · Oran, Algérie",
+    "cta_services": "Nos Services",
+    "cta_contact": "Nous Contacter",
+    "badge": "ans d'expérience"
+  },
+  "strip": {
+    "specialty_label": "Spécialité",
+    "specialty_value": "Optique & Lunetterie",
+    "hours_label": "Horaires",
+    "location_label": "Localisation",
+    "appointment_label": "Rendez-vous",
+    "appointment_value": "Sans réservation"
+  },
+  "stats": {
+    "years": "ans d'expérience",
+    "patients": "patients servis",
+    "frames": "montures en stock",
+    "services": "services proposés"
+  },
+  "about": {
+    "signature": "— Khouane Yacine, Opticien"
+  },
+  "services": {
+    "title": "Nos Services",
+    "subtitle": "Des soins visuels complets pour toute la famille"
+  },
+  "gallery": {
+    "title": "Notre Centre",
+    "subtitle": "Un espace moderne dédié à votre confort visuel"
+  },
+  "testimonials": {
+    "title": "Avis de nos Patients",
+    "subtitle": "Ce que disent nos clients"
+  },
+  "booking": {
+    "title": "Prendre Rendez-vous",
+    "subtitle": "Réservez votre examen de vue en quelques clics",
+    "fullName": "Nom complet",
+    "phone": "Téléphone",
+    "email": "Email (optionnel)",
+    "preferredDate": "Date souhaitée",
+    "preferredTime": "Heure souhaitée",
+    "reason": "Motif (optionnel)",
+    "submit": "Confirmer le rendez-vous",
+    "submitting": "Envoi en cours...",
+    "success_title": "Rendez-vous enregistré !",
+    "success_body": "Nous vous contacterons pour confirmer votre rendez-vous.",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "time_morning": "Matin (9h–12h)",
+    "time_afternoon": "Après-midi (12h–15h)",
+    "time_evening": "Soir (15h–19h)"
+  },
+  "catalog": {
+    "title": "Notre Catalogue",
+    "subtitle": "Montures, lentilles et lunettes de soleil",
+    "filter_all": "Tout",
+    "filter_frames": "Montures",
+    "filter_lenses": "Lentilles",
+    "filter_sunglasses": "Solaires",
+    "filter_brand": "Marque",
+    "filter_price": "Prix",
+    "filter_stock": "En stock uniquement",
+    "no_results": "Aucun produit trouvé",
+    "price_from": "à partir de",
+    "currency": "DA",
+    "in_stock": "En stock",
+    "out_of_stock": "Épuisé",
+    "details": "Voir détails"
+  },
+  "contact": {
+    "title": "Nous Trouver",
+    "hours_title": "Horaires d'ouverture",
+    "saturday_wednesday": "Sam – Mer",
+    "thursday": "Jeudi",
+    "friday": "Vendredi",
+    "closed": "Fermé",
+    "whatsapp": "WhatsApp",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "open_now": "Ouvert maintenant",
+    "closed_now": "Fermé"
+  },
+  "cta": {
+    "title": "Prêt à voir clairement ?",
+    "subtitle": "Prenez rendez-vous dès aujourd'hui",
+    "button": "Réserver sur WhatsApp"
+  },
+  "footer": {
+    "tagline": "Votre vision, notre priorité.",
+    "rights": "Tous droits réservés."
+  },
+  "admin": {
+    "dashboard": "Tableau de bord",
+    "services": "Services",
+    "catalog": "Catalogue",
+    "appointments": "Rendez-vous",
+    "testimonials": "Témoignages",
+    "content": "Contenu",
+    "api_keys": "Clés API",
+    "logout": "Déconnexion",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "add": "Ajouter",
+    "publish": "Publier",
+    "status_pending": "En attente",
+    "status_confirmed": "Confirmé",
+    "status_completed": "Terminé",
+    "status_cancelled": "Annulé",
+    "login_title": "Connexion Admin",
+    "login_email": "Email",
+    "login_password": "Mot de passe",
+    "login_submit": "Se connecter",
+    "login_error": "Email ou mot de passe incorrect"
+  }
+}
