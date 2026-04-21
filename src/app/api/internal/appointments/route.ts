@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { createSupabaseServerClient } from "@/lib/supabase/server";
+import { createSupabaseServiceClient } from "@/lib/supabase/server";
 
 const schema = z.object({
   full_name: z.string().min(2).max(100),
@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
     }
 
     const { email, ...rest } = parsed.data;
-    const supabase = await createSupabaseServerClient();
+    const supabase = await createSupabaseServiceClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const { data, error } = await (supabase as any)
       .from("appointments")

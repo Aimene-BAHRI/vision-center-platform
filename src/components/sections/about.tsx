@@ -16,7 +16,7 @@ export default function About({
         {/* Image */}
         <div className="relative h-[420px] overflow-hidden">
           <Image
-            src="https://images.unsplash.com/photo-1614714436597-80928f48e7b7?w=800&q=80&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1577401239170-897942555fb3?w=800&q=80&auto=format&fit=crop"
             alt="Vision Center interior"
             fill
             className="object-cover"

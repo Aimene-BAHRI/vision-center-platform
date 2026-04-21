@@ -3,10 +3,10 @@ import Image from "next/image";
 
 const GALLERY_IMAGES = [
   { src: "https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=600&q=80&auto=format&fit=crop", alt: "Optical frames display" },
-  { src: "https://images.unsplash.com/photo-1516825295064-0e5d7e7a1db4?w=600&q=80&auto=format&fit=crop", alt: "Eye examination" },
+  { src: "https://images.unsplash.com/photo-1590735213920-68192a487bc2?w=600&q=80&auto=format&fit=crop", alt: "Eye examination" },
   { src: "https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=600&q=80&auto=format&fit=crop", alt: "Glasses collection" },
-  { src: "https://images.unsplash.com/photo-1599230407020-b7e1ef95d1ef?w=600&q=80&auto=format&fit=crop", alt: "Sunglasses" },
-  { src: "https://images.unsplash.com/photo-1587574293340-e0011c4e8ecf?w=600&q=80&auto=format&fit=crop", alt: "Contact lenses" },
+  { src: "https://images.unsplash.com/photo-1508296695146-257a814070b4?w=600&q=80&auto=format&fit=crop", alt: "Sunglasses" },
+  { src: "https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?w=600&q=80&auto=format&fit=crop", alt: "Contact lenses" },
   { src: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&q=80&auto=format&fit=crop", alt: "Optical center" },
 ];
 
