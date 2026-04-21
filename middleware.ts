@@ -12,6 +12,10 @@ export async function middleware(request: NextRequest) {
   // Step 1: run next-intl locale detection + rewrite
   const intlResponse = intlMiddleware(request);
 
+  // Stamp detected locale on the response so app/layout.tsx can read it
+  const locale = request.nextUrl.pathname.startsWith("/ar") ? "ar" : "fr";
+  intlResponse?.headers.set("x-locale", locale);
+
   // Step 2: admin guard — protect /[locale]/admin/** except login
   const pathname = request.nextUrl.pathname;
   if (ADMIN_PATH.test(pathname) && !ADMIN_LOGIN.test(pathname)) {
