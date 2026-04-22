@@ -164,5 +164,5 @@ INSERT INTO services (name_fr, name_ar, description_fr, description_ar, icon, di
 -- ── SEED TESTIMONIALS ─────────────────────────────────────
 INSERT INTO testimonials (author_name, rating, body_fr, body_ar, source, display_order) VALUES
   ('Amira B.', 5, 'Service excellent et très professionnel. Mes lunettes étaient prêtes le jour même avec une correction parfaite. Je recommande vivement !', 'خدمة ممتازة واحترافية للغاية. نظارتي كانت جاهزة في نفس اليوم مع تصحيح مثالي. أوصي بشدة!', 'manual', 1),
-  ('Karim M.', 5, 'L'opticien a pris le temps de tout expliquer clairement. Excellent choix de montures à tous les prix. Je reviendrai sans hésiter.', 'أخذ البصري وقته لشرح كل شيء بوضوح. اختيار رائع من الإطارات بجميع الأسعار. سأعود بكل تأكيد.', 'manual', 2),
-  ('Fatima Z.', 4, 'Personnel très compétent et bienveillant. Mes enfants se sont sentis à l'aise lors de leur examen de vue. Expérience merveilleuse !', 'طاقم عمل كفء وودود للغاية. شعر أطفالي بالراحة التامة أثناء فحص نظرهم. تجربة رائعة!', 'manual', 3);
+  ('Karim M.', 5, 'L"opticien a pris le temps de tout expliquer clairement. Excellent choix de montures à tous les prix. Je reviendrai sans hésiter.', 'أخذ البصري وقته لشرح كل شيء بوضوح. اختيار رائع من الإطارات بجميع الأسعار. سأعود بكل تأكيد.', 'manual', 2),
+  ('Fatima Z.', 4, 'Personnel très compétent et bienveillant. Mes enfants se sont sentis à l"aise lors de leur examen de vue. Expérience merveilleuse !', 'طاقم عمل كفء وودود للغاية. شعر أطفالي بالراحة التامة أثناء فحص نظرهم. تجربة رائعة!', 'manual', 3);

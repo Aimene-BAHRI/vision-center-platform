@@ -29,7 +29,10 @@ export default async function ProductDetailPage({
   const product = data as CatalogProductRow;
   const locale = await getLocale();
   const t = await getTranslations("catalog");
-  const desc = locale === "ar" && product.description_ar ? product.description_ar : product.description_fr;
+  const desc =
+    locale === "ar" && product.description_ar
+      ? product.description_ar
+      : product.description_fr;
 
   return (
     <>
@@ -51,12 +54,12 @@ export default async function ProductDetailPage({
                   src={product.image_url}
                   alt={product.name}
                   fill
-                  className="object-cover"
+                  className="object-fill"
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               ) : (
                 <div className="absolute inset-0 flex items-center justify-center text-vc-silver/40">
-                  No image
+                  {t("no_image")}
                 </div>
               )}
             </div>
@@ -64,14 +67,24 @@ export default async function ProductDetailPage({
             {/* Info */}
             <div className="flex flex-col gap-6 justify-center">
               <div>
-                <p className="text-vc-silver text-xs tracking-widest uppercase mb-1">{product.brand}</p>
-                <h1 className="font-heading text-4xl text-vc-dark mb-3">{product.name}</h1>
+                <p className="text-vc-silver text-xs tracking-widest uppercase mb-1">
+                  {product.brand}
+                </p>
+                <h1 className="font-heading text-4xl text-vc-dark mb-3">
+                  {product.name}
+                </h1>
                 <div className="flex gap-2 flex-wrap">
-                  <Badge className="bg-vc-teal-lt text-vc-teal border-0 capitalize">{product.category}</Badge>
+                  <Badge className="bg-vc-teal-lt text-vc-teal border-0 capitalize">
+                    {product.category}
+                  </Badge>
                   {product.stock > 0 ? (
-                    <Badge className="bg-green-100 text-green-700 border-0">{t("in_stock")}</Badge>
+                    <Badge className="bg-green-100 text-green-700 border-0">
+                      {t("in_stock")}
+                    </Badge>
                   ) : (
-                    <Badge className="bg-red-100 text-red-600 border-0">{t("out_of_stock")}</Badge>
+                    <Badge className="bg-red-100 text-red-600 border-0">
+                      {t("out_of_stock")}
+                    </Badge>
                   )}
                 </div>
               </div>
@@ -80,7 +93,9 @@ export default async function ProductDetailPage({
                 {formatPrice(product.price, locale)}
               </p>
 
-              {desc && <p className="text-vc-slate/80 leading-relaxed">{desc}</p>}
+              {desc && (
+                <p className="text-vc-slate/80 leading-relaxed">{desc}</p>
+              )}
 
               <a
                 href="https://wa.me/213674088158"
@@ -88,7 +103,7 @@ export default async function ProductDetailPage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center bg-vc-teal text-white px-8 py-3 text-sm tracking-widest uppercase hover:bg-[#0e9fcc] transition-colors w-fit"
               >
-                Commander via WhatsApp
+                {t("order_whatsapp")}
               </a>
             </div>
           </div>

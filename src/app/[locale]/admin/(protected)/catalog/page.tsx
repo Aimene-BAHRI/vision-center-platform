@@ -1,12 +1,18 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Trash2, Plus, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import type { CatalogProductRow } from "@/types/database.types";
@@ -14,38 +20,60 @@ import { toast } from "sonner";
 import { formatPrice } from "@/lib/utils";
 
 const EMPTY_PRODUCT: Partial<CatalogProductRow> = {
-  name: "", category: "frames", brand: "", price: 0, stock: 0,
-  description_fr: "", description_ar: "", is_active: true,
+  name: "",
+  category: "frames",
+  brand: "",
+  price: 0,
+  stock: 0,
+  description_fr: "",
+  description_ar: "",
+  is_active: true,
 };
 
 export default function CatalogAdminPage() {
   const [rows, setRows] = useState<CatalogProductRow[]>([]);
   const [editing, setEditing] = useState<string | null>(null);
   const [adding, setAdding] = useState(false);
-  const [newProd, setNewProd] = useState<Partial<CatalogProductRow>>({ ...EMPTY_PRODUCT });
+  const [newProd, setNewProd] = useState<Partial<CatalogProductRow>>({
+    ...EMPTY_PRODUCT,
+  });
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const sb = getSupabaseBrowserClient();
 
   async function load() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { data } = await (sb as any).from("catalog_products").select("*").order("name");
+    const { data } = await (sb as any)
+      .from("catalog_products")
+      .select("*")
+      .order("name");
     setRows((data ?? []) as CatalogProductRow[]);
   }
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   async function toggle(id: string, val: boolean) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    await (sb as any).from("catalog_products").update({ is_active: val }).eq("id", id);
-    setRows((prev) => prev.map((r) => r.id === id ? { ...r, is_active: val } : r));
+    await (sb as any)
+      .from("catalog_products")
+      .update({ is_active: val })
+      .eq("id", id);
+    setRows((prev) =>
+      prev.map((r) => (r.id === id ? { ...r, is_active: val } : r)),
+    );
   }
 
   async function remove(id: string) {
     if (!confirm("Supprimer ce produit ?")) return;
     const row = rows.find((r) => r.id === id);
     if (row?.image_path) {
-      await sb.storage.from("catalog-images").remove([row.image_path]);
+      await fetch("/api/internal/upload", {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ path: row.image_path }),
+      });
     }
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (sb as any).from("catalog_products").delete().eq("id", id);
@@ -53,35 +81,61 @@ export default function CatalogAdminPage() {
     toast.success("Produit supprimé");
   }
 
-  async function uploadImage(file: File): Promise<{ url: string; path: string } | null> {
+  async function uploadImage(
+    file: File,
+  ): Promise<{ url: string; path: string } | null> {
     setUploading(true);
-    const ext = file.name.split(".").pop();
-    const path = `products/${Date.now()}.${ext}`;
-    const { error } = await sb.storage.from("catalog-images").upload(path, file);
+    const form = new FormData();
+    form.append("file", file);
+    const res = await fetch("/api/internal/upload", {
+      method: "POST",
+      body: form,
+    });
     setUploading(false);
-    if (error) { toast.error("Erreur upload"); return null; }
-    const { data } = sb.storage.from("catalog-images").getPublicUrl(path);
-    return { url: data.publicUrl, path };
+    if (!res.ok) {
+      const { error } = await res.json();
+      toast.error(`Erreur upload: ${error ?? res.statusText}`);
+      return null;
+    }
+    return res.json();
   }
 
   async function create() {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (sb as any).from("catalog_products").insert(newProd);
+    const { error } = await (sb as any)
+      .from("catalog_products")
+      .insert(newProd);
     if (error) toast.error("Erreur");
-    else { toast.success("Produit créé"); setAdding(false); setNewProd({ ...EMPTY_PRODUCT }); load(); }
+    else {
+      toast.success("Produit créé");
+      setAdding(false);
+      setNewProd({ ...EMPTY_PRODUCT });
+      load();
+    }
   }
 
   async function save(id: string, updates: Partial<CatalogProductRow>) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const { error } = await (sb as any).from("catalog_products").update(updates).eq("id", id);
-    if (error) toast.error("Erreur"); else { toast.success("Enregistré"); load(); setEditing(null); }
+    const { error } = await (sb as any)
+      .from("catalog_products")
+      .update(updates)
+      .eq("id", id);
+    if (error) toast.error("Erreur");
+    else {
+      toast.success("Enregistré");
+      load();
+      setEditing(null);
+    }
   }
 
   return (
     <div>
       <div className="flex items-center justify-between mb-8">
         <h1 className="font-heading text-3xl text-vc-dark">Catalogue</h1>
-        <Button onClick={() => setAdding(!adding)} className="bg-vc-teal hover:bg-[#0e9fcc] text-white text-xs tracking-widest uppercase gap-2">
+        <Button
+          onClick={() => setAdding(!adding)}
+          className="bg-vc-teal hover:bg-[#0e9fcc] text-white text-xs tracking-widest uppercase gap-2"
+        >
           <Plus size={14} /> Ajouter un produit
         </Button>
       </div>
@@ -94,7 +148,12 @@ export default function CatalogAdminPage() {
           onCancel={() => setAdding(false)}
           onImageUpload={async (f) => {
             const result = await uploadImage(f);
-            if (result) setNewProd({ ...newProd, image_url: result.url, image_path: result.path });
+            if (result)
+              setNewProd({
+                ...newProd,
+                image_url: result.url,
+                image_path: result.path,
+              });
           }}
           uploading={uploading}
           fileRef={fileRef}
@@ -117,15 +176,21 @@ export default function CatalogAdminPage() {
           </thead>
           <tbody className="divide-y divide-vc-mist">
             {rows.map((r) => (
-              <>
-                <tr key={r.id} className="hover:bg-vc-mist/40">
+              <React.Fragment key={r.id}>
+                <tr className="hover:bg-vc-mist/40">
                   <td className="px-4 py-3">
                     {r.image_url ? (
-                      <div className="relative w-12 h-12 overflow-hidden bg-vc-mist">
-                        <Image src={r.image_url} alt={r.name} fill className="object-cover" sizes="48px" />
+                      <div className="relative w-14 h-14 overflow-hidden bg-vc-mist group/img cursor-zoom-in">
+                        <Image
+                          src={r.image_url}
+                          alt={r.name}
+                          fill
+                          className="object-fill transition-transform duration-300 group-hover/img:scale-125"
+                          sizes="56px"
+                        />
                       </div>
                     ) : (
-                      <div className="w-12 h-12 bg-vc-mist flex items-center justify-center text-vc-silver/50">
+                      <div className="w-14 h-14 bg-vc-mist flex items-center justify-center text-vc-silver/50">
                         <ImageIcon size={16} />
                       </div>
                     )}
@@ -134,17 +199,30 @@ export default function CatalogAdminPage() {
                     <p className="font-medium text-vc-dark">{r.name}</p>
                     <p className="text-vc-silver text-xs">{r.brand}</p>
                   </td>
-                  <td className="px-4 py-3 capitalize text-vc-slate">{r.category}</td>
-                  <td className="px-4 py-3 text-vc-teal font-medium">{formatPrice(r.price, "fr")}</td>
+                  <td className="px-4 py-3 capitalize text-vc-slate">
+                    {r.category}
+                  </td>
+                  <td className="px-4 py-3 text-vc-teal font-medium">
+                    {formatPrice(r.price, "fr")}
+                  </td>
                   <td className="px-4 py-3 text-vc-slate">{r.stock}</td>
                   <td className="px-4 py-3">
-                    <Switch checked={r.is_active} onCheckedChange={(v) => toggle(r.id, v)} />
+                    <Switch
+                      checked={r.is_active}
+                      onCheckedChange={(v) => toggle(r.id, v)}
+                    />
                   </td>
                   <td className="px-4 py-3 flex gap-2">
-                    <button onClick={() => setEditing(editing === r.id ? null : r.id)} className="text-vc-teal text-xs hover:underline">
+                    <button
+                      onClick={() => setEditing(editing === r.id ? null : r.id)}
+                      className="text-vc-teal text-xs hover:underline"
+                    >
                       {editing === r.id ? "Fermer" : "Modifier"}
                     </button>
-                    <button onClick={() => remove(r.id)} className="text-vc-silver hover:text-red-500">
+                    <button
+                      onClick={() => remove(r.id)}
+                      className="text-vc-silver hover:text-red-500"
+                    >
                       <Trash2 size={14} />
                     </button>
                   </td>
@@ -160,7 +238,10 @@ export default function CatalogAdminPage() {
                         onImageUpload={async (f) => {
                           const result = await uploadImage(f);
                           if (result) {
-                            await save(r.id, { image_url: result.url, image_path: result.path });
+                            await save(r.id, {
+                              image_url: result.url,
+                              image_path: result.path,
+                            });
                           }
                         }}
                         uploading={uploading}
@@ -169,12 +250,14 @@ export default function CatalogAdminPage() {
                     </td>
                   </tr>
                 )}
-              </>
+              </React.Fragment>
             ))}
           </tbody>
         </table>
         {rows.length === 0 && (
-          <p className="text-center py-12 text-vc-silver">Aucun produit. Ajoutez-en un !</p>
+          <p className="text-center py-12 text-vc-silver">
+            Aucun produit. Ajoutez-en un !
+          </p>
         )}
       </div>
     </div>
@@ -182,7 +265,14 @@ export default function CatalogAdminPage() {
 }
 
 function ProductForm({
-  product, onChange, onSave, onCancel, onImageUpload, uploading, fileRef, isNew
+  product,
+  onChange,
+  onSave,
+  onCancel,
+  onImageUpload,
+  uploading,
+  fileRef,
+  isNew,
 }: {
   product: CatalogProductRow;
   onChange: (field: string, value: string | number | boolean) => void;
@@ -195,18 +285,40 @@ function ProductForm({
 }) {
   const [vals, setVals] = useState({ ...product });
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const set = (f: string, v: any) => { setVals((p) => ({ ...p, [f]: v })); onChange(f, v); };
+  const set = (f: string, v: any) => {
+    setVals((p) => ({ ...p, [f]: v }));
+    onChange(f, v);
+  };
 
   return (
     <div className="bg-vc-white border border-vc-teal/30 p-6 mt-3 space-y-4">
-      <p className="font-medium text-vc-dark text-sm">{isNew ? "Nouveau produit" : `Modifier — ${product.name}`}</p>
+      <p className="font-medium text-vc-dark text-sm">
+        {isNew ? "Nouveau produit" : `Modifier — ${product.name}`}
+      </p>
       <div className="grid md:grid-cols-3 gap-4">
-        <div><Label className="text-xs mb-1 block">Nom</Label><Input value={vals.name} onChange={(e) => set("name", e.target.value)} /></div>
-        <div><Label className="text-xs mb-1 block">Marque</Label><Input value={vals.brand} onChange={(e) => set("brand", e.target.value)} /></div>
+        <div>
+          <Label className="text-xs mb-1 block">Nom</Label>
+          <Input
+            value={vals.name}
+            onChange={(e) => set("name", e.target.value)}
+          />
+        </div>
+        <div>
+          <Label className="text-xs mb-1 block">Marque</Label>
+          <Input
+            value={vals.brand}
+            onChange={(e) => set("brand", e.target.value)}
+          />
+        </div>
         <div>
           <Label className="text-xs mb-1 block">Catégorie</Label>
-          <Select value={vals.category ?? "frames"} onValueChange={(v) => set("category", v)}>
-            <SelectTrigger><SelectValue /></SelectTrigger>
+          <Select
+            value={vals.category ?? "frames"}
+            onValueChange={(v) => set("category", v)}
+          >
+            <SelectTrigger>
+              <SelectValue />
+            </SelectTrigger>
             <SelectContent>
               <SelectItem value="frames">Montures</SelectItem>
               <SelectItem value="lenses">Lentilles</SelectItem>
@@ -214,14 +326,34 @@ function ProductForm({
             </SelectContent>
           </Select>
         </div>
-        <div><Label className="text-xs mb-1 block">Prix (DA)</Label><Input type="number" value={vals.price} onChange={(e) => set("price", parseFloat(e.target.value) || 0)} /></div>
-        <div><Label className="text-xs mb-1 block">Stock</Label><Input type="number" value={vals.stock} onChange={(e) => set("stock", parseInt(e.target.value) || 0)} /></div>
+        <div>
+          <Label className="text-xs mb-1 block">Prix (DA)</Label>
+          <Input
+            type="number"
+            value={vals.price}
+            onChange={(e) => set("price", parseFloat(e.target.value) || 0)}
+          />
+        </div>
+        <div>
+          <Label className="text-xs mb-1 block">Stock</Label>
+          <Input
+            type="number"
+            value={vals.stock}
+            onChange={(e) => set("stock", parseInt(e.target.value) || 0)}
+          />
+        </div>
         <div>
           <Label className="text-xs mb-1 block">Image</Label>
           <div className="flex items-center gap-2">
             {vals.image_url && (
               <div className="relative w-12 h-12 overflow-hidden bg-vc-mist">
-                <Image src={vals.image_url} alt="" fill className="object-cover" sizes="48px" />
+                <Image
+                  src={vals.image_url}
+                  alt=""
+                  fill
+                  className="object-fill"
+                  sizes="48px"
+                />
               </div>
             )}
             <Button
@@ -248,18 +380,30 @@ function ProductForm({
         </div>
         <div className="md:col-span-3">
           <Label className="text-xs mb-1 block">Description (FR)</Label>
-          <Input value={vals.description_fr ?? ""} onChange={(e) => set("description_fr", e.target.value)} />
+          <Input
+            value={vals.description_fr ?? ""}
+            onChange={(e) => set("description_fr", e.target.value)}
+          />
         </div>
         <div className="md:col-span-3" dir="rtl">
           <Label className="text-xs mb-1 block">الوصف (AR)</Label>
-          <Input value={vals.description_ar ?? ""} onChange={(e) => set("description_ar", e.target.value)} className="font-arabic" />
+          <Input
+            value={vals.description_ar ?? ""}
+            onChange={(e) => set("description_ar", e.target.value)}
+            className="font-arabic"
+          />
         </div>
       </div>
       <div className="flex gap-3">
-        <Button onClick={() => onSave(vals)} className="bg-vc-teal hover:bg-[#0e9fcc] text-white text-xs tracking-widest uppercase">
+        <Button
+          onClick={() => onSave(vals)}
+          className="bg-vc-teal hover:bg-[#0e9fcc] text-white text-xs tracking-widest uppercase"
+        >
           {isNew ? "Créer" : "Enregistrer"}
         </Button>
-        <Button variant="outline" onClick={onCancel} className="text-xs">Annuler</Button>
+        <Button variant="outline" onClick={onCancel} className="text-xs">
+          Annuler
+        </Button>
       </div>
     </div>
   );

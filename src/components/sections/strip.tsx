@@ -7,7 +7,7 @@ export default function Strip({ hoursValue }: { hoursValue: string }) {
   const items = [
     { icon: <Eye size={20} />, label: t("specialty_label"), value: t("specialty_value") },
     { icon: <Clock size={20} />, label: t("hours_label"), value: hoursValue },
-    { icon: <MapPin size={20} />, label: t("location_label"), value: "Bir El Djir, Oran" },
+    { icon: <MapPin size={20} />, label: t("location_label"), value: t("location_value") },
     { icon: <Calendar size={20} />, label: t("appointment_label"), value: t("appointment_value") },
   ];
 

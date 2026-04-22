@@ -75,7 +75,7 @@ export default async function HomePage() {
     <>
       <Navbar />
       <main className="flex-1">
-        <Hero heroTitle={heroTitle} heroSubtitle={heroSubtitle} />
+        <Hero heroTitle={heroTitle} heroSubtitle={heroSubtitle} locale={loc} />
         <Strip hoursValue={hoursWeekdays} />
         <Stats
           years={get("stat_years", "num") as number}

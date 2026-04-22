@@ -9,15 +9,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { CheckCircle } from "lucide-react";
+import { getSlotsForDate } from "@/lib/slots";
 
 const schema = z.object({
   full_name: z.string().min(2),
   phone: z.string().min(8),
   email: z.string().email().optional().or(z.literal("")),
   preferred_date: z.string().min(1),
-  preferred_time: z.enum(["morning", "afternoon", "evening"]),
+  preferred_time: z.string().min(1, "Choisissez un créneau"),
   reason: z.string().optional(),
 });
 
@@ -26,12 +26,30 @@ type FormValues = z.infer<typeof schema>;
 export default function BookingForm() {
   const t = useTranslations("booking");
   const locale = useLocale();
-  const [success, setSuccess] = useState(false);
+  const [success, setSuccess]       = useState(false);
   const [serverError, setServerError] = useState("");
+  const [bookedSlots, setBookedSlots] = useState<string[]>([]);
+  const [loadingSlots, setLoadingSlots] = useState(false);
 
-  const { register, handleSubmit, setValue, formState: { errors, isSubmitting } } = useForm<FormValues>({
+  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<FormValues>({
     resolver: zodResolver(schema),
   });
+
+  const selectedDate = watch("preferred_date");
+  const selectedTime = watch("preferred_time");
+
+  async function onDateChange(date: string) {
+    setValue("preferred_date", date);
+    setValue("preferred_time", "");
+    if (!date) { setBookedSlots([]); return; }
+    setLoadingSlots(true);
+    const res = await fetch(`/api/internal/availability?date=${date}`);
+    if (res.ok) {
+      const { booked } = await res.json();
+      setBookedSlots(booked ?? []);
+    }
+    setLoadingSlots(false);
+  }
 
   async function onSubmit(values: FormValues) {
     setServerError("");
@@ -40,11 +58,8 @@ export default function BookingForm() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...values, locale }),
     });
-    if (res.ok) {
-      setSuccess(true);
-    } else {
-      setServerError(t("error"));
-    }
+    if (res.ok) setSuccess(true);
+    else setServerError(t("error"));
   }
 
   if (success) {
@@ -58,6 +73,10 @@ export default function BookingForm() {
   }
 
   const today = new Date().toISOString().split("T")[0];
+  const slots = selectedDate ? getSlotsForDate(selectedDate) : [];
+  const isFriday = selectedDate
+    ? new Date(selectedDate + "T00:00:00").getDay() === 5
+    : false;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto">
@@ -79,27 +98,59 @@ export default function BookingForm() {
         <Input id="email" type="email" {...register("email")} />
       </div>
 
-      <div className="grid sm:grid-cols-2 gap-6">
-        <div className="space-y-2">
-          <Label htmlFor="preferred_date">{t("preferredDate")}</Label>
-          <Input id="preferred_date" type="date" min={today} {...register("preferred_date")} />
-          {errors.preferred_date && <p className="text-red-500 text-xs">{errors.preferred_date.message}</p>}
-        </div>
-        <div className="space-y-2">
+      {/* Date */}
+      <div className="space-y-2">
+        <Label htmlFor="preferred_date">{t("preferredDate")}</Label>
+        <Input
+          id="preferred_date"
+          type="date"
+          min={today}
+          onChange={(e) => onDateChange(e.target.value)}
+          className="max-w-xs"
+        />
+        {errors.preferred_date && <p className="text-red-500 text-xs">{errors.preferred_date.message}</p>}
+      </div>
+
+      {/* Slot grid */}
+      {selectedDate && (
+        <div className="space-y-3">
           <Label>{t("preferredTime")}</Label>
-          <Select onValueChange={(v) => setValue("preferred_time", v as "morning" | "afternoon" | "evening")}>
-            <SelectTrigger>
-              <SelectValue placeholder={t("preferredTime")} />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="morning">{t("time_morning")}</SelectItem>
-              <SelectItem value="afternoon">{t("time_afternoon")}</SelectItem>
-              <SelectItem value="evening">{t("time_evening")}</SelectItem>
-            </SelectContent>
-          </Select>
+          {isFriday ? (
+            <p className="text-red-500 text-sm">{t("closedFriday")}</p>
+          ) : loadingSlots ? (
+            <p className="text-vc-silver text-sm">{t("loadingSlots")}</p>
+          ) : (
+            <div className="grid grid-cols-4 sm:grid-cols-5 md:grid-cols-6 gap-2">
+              {slots.map((slot) => {
+                const booked = bookedSlots.includes(slot);
+                const active = selectedTime === slot;
+                return (
+                  <button
+                    key={slot}
+                    type="button"
+                    disabled={booked}
+                    onClick={() => setValue("preferred_time", slot)}
+                    className={`py-2 text-xs border transition-all duration-150 ${
+                      booked
+                        ? "border-vc-mist bg-vc-mist text-vc-silver/40 cursor-not-allowed line-through"
+                        : active
+                        ? "border-vc-teal bg-vc-teal text-white"
+                        : "border-vc-mist hover:border-vc-teal text-vc-slate"
+                    }`}
+                  >
+                    {slot}
+                  </button>
+                );
+              })}
+            </div>
+          )}
           {errors.preferred_time && <p className="text-red-500 text-xs">{errors.preferred_time.message}</p>}
         </div>
-      </div>
+      )}
+
+      {!selectedDate && (
+        <p className="text-vc-silver text-sm">{t("selectDateFirst")}</p>
+      )}
 
       <div className="space-y-2">
         <Label htmlFor="reason">{t("reason")}</Label>
@@ -110,7 +161,7 @@ export default function BookingForm() {
 
       <Button
         type="submit"
-        disabled={isSubmitting}
+        disabled={isSubmitting || isFriday}
         className="w-full bg-vc-teal hover:bg-[#0e9fcc] text-white tracking-widest uppercase"
       >
         {isSubmitting ? t("submitting") : t("submit")}

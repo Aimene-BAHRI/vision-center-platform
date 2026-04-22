@@ -27,7 +27,7 @@ export default function About({
 
         {/* Text */}
         <div>
-          <p className="text-vc-teal text-xs tracking-[0.25em] uppercase mb-3">À propos</p>
+          <p className="text-vc-teal text-xs tracking-[0.25em] uppercase mb-3">{t("subtitle")}</p>
           <h2 className="font-heading text-4xl md:text-5xl text-vc-dark leading-tight mb-6">
             {title}
           </h2>

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createSupabaseServiceClient } from "@/lib/supabase/server";
+import { ALL_VALID_SLOTS } from "@/lib/slots";
 
 const schema = z.object({
   full_name: z.string().min(2).max(100),
   phone: z.string().min(8).max(20),
   email: z.string().email().optional().or(z.literal("")),
   preferred_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  preferred_time: z.enum(["morning", "afternoon", "evening"]),
+  preferred_time: z.string().refine((v) => ALL_VALID_SLOTS.includes(v), { message: "Invalid time slot" }),
   reason: z.string().max(500).optional(),
   locale: z.enum(["fr", "ar"]).default("fr"),
 });

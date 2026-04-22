@@ -9,6 +9,11 @@ const ADMIN_PATH = /^\/(?:fr|ar)\/admin/;
 const ADMIN_LOGIN = /^\/(?:fr|ar)\/admin\/login/;
 
 export async function middleware(request: NextRequest) {
+  // Redirect bare root to default locale
+  if (request.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/fr", request.url));
+  }
+
   // Step 1: run next-intl locale detection + rewrite
   const intlResponse = intlMiddleware(request);
 

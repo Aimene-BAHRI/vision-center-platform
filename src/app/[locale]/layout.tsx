@@ -33,7 +33,7 @@ export default async function LocaleLayout({
   const isRtl = locale === "ar";
 
   return (
-    <NextIntlClientProvider messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       {children}
       <Toaster position={isRtl ? "bottom-left" : "bottom-right"} />
     </NextIntlClientProvider>

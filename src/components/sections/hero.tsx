@@ -1,16 +1,20 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 
-const WORDS_FR = ["parfaite clarté", "pleine netteté", "chaque style", "vraie précision"];
-const WORDS_AR = ["وضوح تام", "دقة عالية", "كل أسلوب", "إتقان حقيقي"];
-
-export default function Hero({ heroTitle, heroSubtitle }: { heroTitle: string; heroSubtitle: string }) {
+export default function Hero({
+  heroTitle,
+  heroSubtitle,
+  locale,
+}: {
+  heroTitle: string;
+  heroSubtitle: string;
+  locale: string;
+}) {
   const t = useTranslations("hero");
-  const locale = useLocale();
-  const words = locale === "ar" ? WORDS_AR : WORDS_FR;
+  const words = t("words").split("|");
   const [idx, setIdx] = useState(0);
   const [fade, setFade] = useState(true);
 
@@ -32,7 +36,7 @@ export default function Hero({ heroTitle, heroSubtitle }: { heroTitle: string; h
         className="absolute inset-0 scale-105 bg-center bg-cover transition-transform duration-[8000ms]"
         style={{
           backgroundImage:
-            "url('https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1600&q=80&auto=format&fit=crop')",
+            "url('https://images.unsplash.com/photo-1522134239946-03d8c105a0ba?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
         }}
       />
       <div className="absolute inset-0 bg-vc-dark/75" />
@@ -44,13 +48,17 @@ export default function Hero({ heroTitle, heroSubtitle }: { heroTitle: string; h
       </div>
 
       <div className="relative max-w-6xl mx-auto px-6 py-32 md:py-0">
-        <p className="text-vc-teal text-xs tracking-[0.3em] uppercase mb-4">{t("location")}</p>
+        <p className="text-vc-teal text-xs tracking-[0.3em] uppercase mb-4">
+          {t("location")}
+        </p>
 
         <h1 className="font-heading text-5xl md:text-7xl text-vc-white leading-tight mb-2">
           {heroTitle}
         </h1>
 
-        <p className="text-vc-white/60 text-lg md:text-xl mb-2">{heroSubtitle}</p>
+        <p className="text-vc-white/60 text-lg md:text-xl mb-2">
+          {heroSubtitle}
+        </p>
 
         <p className="text-vc-teal text-2xl md:text-3xl font-heading italic mb-10 h-9">
           <span

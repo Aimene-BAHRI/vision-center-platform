@@ -12,13 +12,15 @@
     "location": "Bir El Djir · Oran, Algérie",
     "cta_services": "Nos Services",
     "cta_contact": "Nous Contacter",
-    "badge": "ans d'expérience"
+    "badge": "ans d'expérience",
+    "words": "parfaite clarté|pleine netteté|chaque style|vraie précision"
   },
   "strip": {
     "specialty_label": "Spécialité",
     "specialty_value": "Optique & Lunetterie",
     "hours_label": "Horaires",
     "location_label": "Localisation",
+    "location_value": "Bir El Djir, Oran",
     "appointment_label": "Rendez-vous",
     "appointment_value": "Sans réservation"
   },
@@ -29,6 +31,7 @@
     "services": "services proposés"
   },
   "about": {
+    "subtitle": "À propos",
     "signature": "— Khouane Yacine, Opticien"
   },
   "services": {
@@ -57,9 +60,9 @@
     "success_title": "Rendez-vous enregistré !",
     "success_body": "Nous vous contacterons pour confirmer votre rendez-vous.",
     "error": "Une erreur est survenue. Veuillez réessayer.",
-    "time_morning": "Matin (9h–12h)",
-    "time_afternoon": "Après-midi (12h–15h)",
-    "time_evening": "Soir (15h–19h)"
+    "selectDateFirst": "Choisissez d'abord une date",
+    "closedFriday": "Nous sommes fermés le vendredi. Choisissez un autre jour.",
+    "loadingSlots": "Chargement des créneaux…"
   },
   "catalog": {
     "title": "Notre Catalogue",
@@ -76,7 +79,9 @@
     "currency": "DA",
     "in_stock": "En stock",
     "out_of_stock": "Épuisé",
-    "details": "Voir détails"
+    "details": "Voir détails",
+    "order_whatsapp": "Commander via WhatsApp",
+    "no_image": "Aucune image"
   },
   "contact": {
     "title": "Nous Trouver",
@@ -98,7 +103,9 @@
   },
   "footer": {
     "tagline": "Votre vision, notre priorité.",
-    "rights": "Tous droits réservés."
+    "rights": "Tous droits réservés.",
+    "nav_heading": "Navigation",
+    "contact_heading": "Contact"
   },
   "admin": {
     "dashboard": "Tableau de bord",

@@ -20,7 +20,8 @@ export default function Navbar() {
 
   const links = [
     { href: "#services", label: t("services") },
-    { href: "#catalog", label: t("catalog") },
+
+    { href: `/${locale}/catalog`, label: t("catalog") },
     { href: "#gallery", label: t("gallery") },
     { href: "#about", label: t("about") },
     { href: "#contact", label: t("contact") },
@@ -48,12 +49,15 @@ export default function Navbar() {
       <ul className="hidden md:flex gap-8 list-none">
         {links.map((l) => (
           <li key={l.href}>
-            <a
-              href={l.href}
-              className="text-vc-white/80 hover:text-vc-white text-[0.7rem] tracking-widest uppercase transition-colors"
-            >
-              {l.label}
-            </a>
+            {l.href.startsWith("/") ? (
+              <Link href={l.href} className="text-vc-white/80 hover:text-vc-white text-[0.7rem] tracking-widest uppercase transition-colors">
+                {l.label}
+              </Link>
+            ) : (
+              <a href={l.href} className="text-vc-white/80 hover:text-vc-white text-[0.7rem] tracking-widest uppercase transition-colors">
+                {l.label}
+              </a>
+            )}
           </li>
         ))}
       </ul>
@@ -80,16 +84,17 @@ export default function Navbar() {
       {/* Mobile drawer */}
       {open && (
         <div className="absolute top-full inset-x-0 bg-vc-dark/98 backdrop-blur-md flex flex-col gap-6 px-8 py-8 md:hidden">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="text-vc-white/80 hover:text-vc-white text-sm tracking-widest uppercase"
-            >
-              {l.label}
-            </a>
-          ))}
+          {links.map((l) =>
+            l.href.startsWith("/") ? (
+              <Link key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-vc-white/80 hover:text-vc-white text-sm tracking-widest uppercase">
+                {l.label}
+              </Link>
+            ) : (
+              <a key={l.href} href={l.href} onClick={() => setOpen(false)} className="text-vc-white/80 hover:text-vc-white text-sm tracking-widest uppercase">
+                {l.label}
+              </a>
+            )
+          )}
           <LanguageSwitcher className="text-vc-white" />
           <Link
             href={`/${locale}/booking`}

@@ -12,13 +12,15 @@
     "location": "بئر الجير · وهران، الجزائر",
     "cta_services": "خدماتنا",
     "cta_contact": "تواصل معنا",
-    "badge": "سنوات من الخبرة"
+    "badge": "سنوات من الخبرة",
+    "words": "وضوح تام|دقة عالية|كل أسلوب|إتقان حقيقي"
   },
   "strip": {
     "specialty_label": "التخصص",
     "specialty_value": "البصريات والنظارات",
     "hours_label": "أوقات العمل",
     "location_label": "الموقع",
+    "location_value": "بئر الجير، وهران",
     "appointment_label": "المواعيد",
     "appointment_value": "بدون حجز مسبق"
   },
@@ -29,6 +31,7 @@
     "services": "خدمات متاحة"
   },
   "about": {
+    "subtitle": "من نحن",
     "signature": "— خوان ياسين، بصري"
   },
   "services": {
@@ -57,9 +60,9 @@
     "success_title": "تم تسجيل موعدك!",
     "success_body": "سنتواصل معك لتأكيد موعدك.",
     "error": "حدث خطأ ما. يرجى المحاولة مرة أخرى.",
-    "time_morning": "الصباح (9–12)",
-    "time_afternoon": "بعد الظهر (12–15)",
-    "time_evening": "المساء (15–19)"
+    "selectDateFirst": "اختر التاريخ أولاً",
+    "closedFriday": "نحن مغلقون يوم الجمعة. اختر يوماً آخر.",
+    "loadingSlots": "جارٍ تحميل المواعيد…"
   },
   "catalog": {
     "title": "كتالوجنا",
@@ -76,7 +79,9 @@
     "currency": "دج",
     "in_stock": "متوفر",
     "out_of_stock": "نفذ المخزون",
-    "details": "عرض التفاصيل"
+    "details": "عرض التفاصيل",
+    "order_whatsapp": "اطلب عبر واتساب",
+    "no_image": "لا توجد صورة"
   },
   "contact": {
     "title": "كيفية الوصول إلينا",
@@ -98,7 +103,9 @@
   },
   "footer": {
     "tagline": "رؤيتك، أولويتنا.",
-    "rights": "جميع الحقوق محفوظة."
+    "rights": "جميع الحقوق محفوظة.",
+    "nav_heading": "التنقل",
+    "contact_heading": "اتصل بنا"
   },
   "admin": {
     "dashboard": "لوحة التحكم",
